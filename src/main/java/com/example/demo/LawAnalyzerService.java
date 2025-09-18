@@ -63,11 +63,22 @@ public class LawAnalyzerService {
         }
     }
 
-    private String buildPrompt(LawAnalyzerRequest request){
-        return "Analyzuj následující právní text a extrahuj hlavní změny ve formátu JSON. Datum právního textu e\n" +
-                "Použij strukturu: [{\"date\": \"YYYY-MM-DD\", \"change\": \"stručný popis změny\"}]\n\n" +
-                "Text:\n" + request.getLawText() +
-                "Datum znění:\n" + request.getDate();
+    private String buildPrompt(LawAnalyzerRequest request) {
+        StringBuilder prompt = new StringBuilder();
+        prompt.append("Analyzuj následující právní texty. ");
+        prompt.append("Máš jedno aktuální znění a několik starších verzí s datem. ");
+        prompt.append("Porovnej je a vrať časovou osu změn ve formátu JSON.\n");
+        prompt.append("Použij strukturu: [{\"date\": \"YYYY-MM-DD\", \"change\": \"stručný popis změny\"}]\n\n");
+
+        prompt.append("Aktuální znění:\n").append(request.getCurrentText()).append("\n\n");
+        prompt.append("Starší verze:\n");
+
+        for (LawVersion version : request.getHistory()) {
+            prompt.append("Datum: ").append(version.getDate()).append("\n");
+            prompt.append("Text: ").append(version.getText()).append("\n\n");
+        }
+
+        return prompt.toString();
     }
 }
 
