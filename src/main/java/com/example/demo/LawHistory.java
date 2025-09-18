@@ -3,7 +3,7 @@ package com.example.demo;
 import lombok.Data;
 
 @Data
-public class LawVersion {
+public class LawHistory {
     private String date;
     private String text;
 }

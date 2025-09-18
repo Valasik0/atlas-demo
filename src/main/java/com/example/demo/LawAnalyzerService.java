@@ -73,7 +73,7 @@ public class LawAnalyzerService {
         prompt.append("Aktuální znění:\n").append(request.getCurrentText()).append("\n\n");
         prompt.append("Starší verze:\n");
 
-        for (LawVersion version : request.getHistory()) {
+        for (LawHistory version : request.getHistory()) {
             prompt.append("Datum: ").append(version.getDate()).append("\n");
             prompt.append("Text: ").append(version.getText()).append("\n\n");
         }

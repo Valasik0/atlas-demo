@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Law Analyzer</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="container mt-4">
+<h2>AI Legal Timeline Builder</h2>
+
+<form th:action="@{/analyze-ui}" th:object="${lawRequest}" method="post">
+    <div class="mb-3">
+        <label for="currentText" class="form-label">Aktuální znění</label>
+        <textarea class="form-control" id="currentText" th:field="*{currentText}" rows="3"></textarea>
+    </div>
+
+    <div id="history-container">
+        <h5>Starší verze</h5>
+        <div class="mb-3">
+            <label class="form-label">Datum</label>
+            <input type="date" class="form-control" th:field="*{history[0].date}" />
+            <label class="form-label">Text</label>
+            <textarea class="form-control" th:field="*{history[0].text}" rows="2"></textarea>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Analyzovat</button>
+</form>
+
+<div id="timeline" style="display:flex; align-items:center; justify-content:space-between; margin-top:20px;">
+</div>
+
+<script>
+    const changes = [
+      {
+        "date": "2023-06-18",
+        "change": "Původní znění: Student má právo na stipendium až do výše 1500 Kč měsíčně."
+      },
+      {
+        "date": "aktuální",
+        "change": "Navýšení maximální výše stipendia na 2500 Kč měsíčně."
+      }
+    ];
+
+    const timeline = document.getElementById("timeline");
+
+    changes.forEach(item => {
+        const point = document.createElement("div");
+        point.style.textAlign = "center";
+        point.style.flex = "1";
+
+        // kruh
+        const circle = document.createElement("div");
+        circle.style.width = "20px";
+        circle.style.height = "20px";
+        circle.style.borderRadius = "50%";
+        circle.style.background = "#007bff";
+        circle.style.margin = "0 auto";
+
+        // datum
+        const date = document.createElement("div");
+        date.innerText = item.date;
+        date.style.fontSize = "12px";
+        date.style.marginTop = "5px";
+
+        // změna
+        const change = document.createElement("div");
+        change.innerText = item.change;
+        change.style.fontSize = "10px";
+        change.style.marginTop = "3px";
+
+        point.appendChild(circle);
+        point.appendChild(date);
+        point.appendChild(change);
+        timeline.appendChild(point);
+    });
+</script>
+
+
+</body>
+</html>
