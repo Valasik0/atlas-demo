@@ -57,8 +57,6 @@
 </head>
 <body class="container mt-4">
 
-<h2 class="mb-4">AI Legal Timeline Builder</h2>
-
 <form th:action="@{/analyze-ui}" th:object="${lawRequest}" method="post">
     <div class="mb-3">
         <textarea class="form-control" id="currentText" th:field="*{currentText}" rows="3" placeholder="Zadejte aktuální znění"></textarea>

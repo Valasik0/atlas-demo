@@ -26,7 +26,6 @@ public class UiController {
         String result = analyzerService.analyzeLaw(request);
         model.addAttribute("result", result);
 
-        // Aby šablona znovu měla alespoň jednu prázdnou historii pro další POST
         if (request.getHistory() == null || request.getHistory().isEmpty()) {
             request.setHistory(List.of(new LawHistory()));
         }
